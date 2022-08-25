@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class ChangeCoordinate extends Applet{
     public void init() {
-
+        
     }
     public void paint(Graphics g) {
         int originX = (getX() + getWidth()) / 2;

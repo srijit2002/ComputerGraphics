@@ -26,7 +26,7 @@ public class GridConstructor extends Applet implements ActionListener {
         g.setColor(gridColor);
         int curY=originY-gridGap;
         while(curY>=0){
-            g.drawLine(0,curY,maxX,curY);
+            g.drawLine(0,curY,maxX,curY);// x1 y1 x2 y2
             curY-=gridGap;
         }
         curY=originY+gridGap;
