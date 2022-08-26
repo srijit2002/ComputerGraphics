@@ -12,7 +12,7 @@ public class Midpoint extends Applet implements ActionListener {
     int[] axisColorRGB = { 255, 0, 0 };
     int scale = 1;
     int gridGap;
-    int pointDiameter = 30;
+    int pointDiameter = 16;
     Button zoomInButton, zoomOutButton, drawLineButton;
     TextField input;
     int[] endPoint1 = new int[2];
@@ -104,7 +104,7 @@ public class Midpoint extends Applet implements ActionListener {
     public void paint(Graphics g) {
         int originX = (getX() + getWidth()) / 2;
         int originY = (getY() + getHeight()) / 2;
-        gridGap = 10 + scale;
+        gridGap = 4 + scale;
 
         // background colors
         Color axisColor = new Color(axisColorRGB[0], axisColorRGB[1], axisColorRGB[2]);
@@ -128,7 +128,7 @@ public class Midpoint extends Applet implements ActionListener {
             scale = Math.min(100, scale + 2);
             repaint();
         } else if (e.getSource() == zoomOutButton) {
-            scale = Math.max(1, scale - 2);
+            scale = Math.max(-3, scale - 2);
             repaint();
         } else if (e.getSource() == drawLineButton) {
             String userinput = input.getText();

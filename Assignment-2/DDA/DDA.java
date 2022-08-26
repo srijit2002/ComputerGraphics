@@ -13,7 +13,7 @@ public class DDA extends Applet implements ActionListener {
     int[] axisColorRGB = { 255, 0, 0 };
     int scale = 1;
     int gridGap;
-    int pointDiameter = 30;
+    int pointDiameter = 16;
     Button zoomInButton, zoomOutButton, drawLineButton;
     TextField input;
     int[] endPoint1 = new int[2];
@@ -104,7 +104,7 @@ public class DDA extends Applet implements ActionListener {
     public void paint(Graphics g) {
         int originX = (getX() + getWidth()) / 2;
         int originY = (getY() + getHeight()) / 2;
-        gridGap = 10 + scale;
+        gridGap = 4 + scale;
 
         // background colors
         Color axisColor = new Color(axisColorRGB[0], axisColorRGB[1], axisColorRGB[2]);
@@ -152,13 +152,11 @@ public class DDA extends Applet implements ActionListener {
                 }
             } catch (Exception exception) {
                 input.setText("Please check your input format");
-                System.out.println(exception.getMessage());
                 return;
             }
             endPoint1 = endpoint_1;
             endPoint2 = endpoint_2;
             repaint();
-
         }
     }
 }
