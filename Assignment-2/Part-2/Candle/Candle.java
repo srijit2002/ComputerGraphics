@@ -11,6 +11,8 @@ public class Candle extends Applet implements ActionListener {
     Color zoomInButtonColor = Color.CYAN;
     Color zoomOutButtonColor = Color.ORANGE;
     Color drawLineButtonColor = Color.green;
+    Color lightCandleButtonColor = Color.yellow;
+    Color putOutCandleButtonColor = Color.white;
 
     Color backgroundColor=Color.white;
     Color foregroundColor=Color.black;
@@ -20,11 +22,13 @@ public class Candle extends Applet implements ActionListener {
     int scale = 1;
     int gridGap;
     int pointDiameter = 16;
-    Button zoomInButton, zoomOutButton, drawLineButton,invertColorButton;
+    Button zoomInButton, zoomOutButton, drawLineButton,lightCandleButton,putOutCandleButton;
     TextField input;
 
     int []candleBottomLeft={5,6};
     int candleWidth=3,candleHeight=22;
+    boolean isCandleOn=true;
+
     public void init() {
         this.setBackground(backgroundColor);
         zoomInButton = createButton("Zoom In", zoomInButtonColor);
@@ -38,6 +42,14 @@ public class Candle extends Applet implements ActionListener {
         drawLineButton = createButton("Draw Candle", drawLineButtonColor);
         add(drawLineButton);
         drawLineButton.addActionListener(this);
+
+        lightCandleButton = createButton("Light Candle", lightCandleButtonColor);
+        add(lightCandleButton);
+        lightCandleButton.addActionListener(this);
+
+        putOutCandleButton = createButton("Put Out Candle", putOutCandleButtonColor);
+        add(putOutCandleButton);
+        putOutCandleButton.addActionListener(this);
 
         input = new TextField("Bottom-Left-X Bottom-Left-Y Width Height");
         add(input);
@@ -101,14 +113,20 @@ public class Candle extends Applet implements ActionListener {
         float y_incr = (float) dy / total_steps;
         float x = x0;
         float y = y0;
-        Color currentFlameColor = Color.yellow;
-        int orangeStart = (int) Math.ceil(0.3 * total_steps);
-        int redStart = (int) Math.ceil(0.7 * total_steps);
+        Color currentFlameColor = new Color(255,232,8);
+        int shade2= (int) Math.ceil(0.3 * total_steps);
+        int shade3 = (int) Math.ceil(0.5 * total_steps);
+        int shade4 = (int) Math.ceil(0.7 * total_steps);
+        int shade5 = (int) Math.ceil(0.9 * total_steps);
         for (int number_of_steps = 0; number_of_steps <= total_steps; number_of_steps++) {
-            if (number_of_steps >= orangeStart)
-                currentFlameColor = Color.orange;
-            if (number_of_steps >= redStart)
-                currentFlameColor = Color.red;
+            if (number_of_steps == shade2)
+                currentFlameColor = new Color(255,206,0);
+            if (number_of_steps == shade3)
+                currentFlameColor = new Color(255,154,0);
+            if (number_of_steps == shade4)
+                currentFlameColor = new Color(255,90,0);
+            if (number_of_steps == shade5)
+                currentFlameColor = new Color(255,0,0);
             plotPoint(g, origin, Math.round(x), Math.round(y), currentFlameColor);
             x += x_incr;
             y += y_incr;
@@ -137,12 +155,20 @@ public class Candle extends Applet implements ActionListener {
                 plotPoint(g, origin, x, y,Color.white);
             }
         }
+        plotPoint(g, origin,(bottomLeft[0]+topRight[0])/2,topRight[1]+1,Color.black);
+        plotPoint(g, origin,(bottomLeft[0]+topRight[0])/2,topRight[1]+2,Color.black);
+        plotPoint(g, origin,(bottomLeft[0]+topRight[0])/2,topRight[1]+3,Color.black);
     }
     public void drawCandle(Graphics g,int []origin,int []bottomLeft,int []topRight,int flameWidth){
         drawCandleBase(g, origin, bottomLeft, topRight);
-        drawFlame(g, new int[]{(bottomLeft[0]+topRight[0])/2,topRight[1]+1}, origin, flameWidth);
+        if(isCandleOn)drawFlame(g, new int[]{(bottomLeft[0]+topRight[0])/2,topRight[1]+1}, origin, flameWidth);
     }
-    
+    public void lightCandle(){
+        this.isCandleOn=true;
+    }
+    public void putOutCandle(){
+        this.isCandleOn=false;
+    }
     public void paint(Graphics g) {
         
 
@@ -164,19 +190,21 @@ public class Candle extends Applet implements ActionListener {
 
         // plot line
         int []candleTopRight={candleBottomLeft[0]+candleWidth,candleBottomLeft[1]+candleHeight};
-        drawCandle(g, new int[] {originX,originY}, candleBottomLeft, candleTopRight,7);
-
+        drawCandle(g, new int[] {originX,originY}, candleBottomLeft, candleTopRight,candleWidth+2);
+       
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == zoomInButton) {
             scale = Math.min(100, scale + 2);
-            repaint();
         } else if (e.getSource() == zoomOutButton) {
             scale = Math.max(1, scale - 2);
-            repaint();
-        } else if (e.getSource() == drawLineButton) {
+        }else if (e.getSource() == lightCandleButton) {
+            lightCandle();
+        }else if(e.getSource() == putOutCandleButton){
+            putOutCandle();
+        }else if (e.getSource() == drawLineButton) {
             String userinput = input.getText();
             if (userinput.length() == 0) {
                 input.setText("Please check your input format");
@@ -203,7 +231,7 @@ public class Candle extends Applet implements ActionListener {
             candleBottomLeft = endpoint_1;
             candleWidth=endpoint_2[0];
             candleHeight=endpoint_2[1];
-            repaint();
         }
+        repaint();
     }
 }

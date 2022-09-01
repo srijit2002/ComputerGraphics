@@ -128,7 +128,7 @@ public class DDA extends Applet implements ActionListener {
             scale = Math.min(100, scale + 2);
             repaint();
         } else if (e.getSource() == zoomOutButton) {
-            scale = Math.max(1, scale - 2);
+            scale = Math.max(-2, scale - 2);
             repaint();
         } else if (e.getSource() == drawLineButton) {
             String userinput = input.getText();

@@ -101,14 +101,20 @@ public class Fire extends Applet implements ActionListener {
         float y_incr = (float) dy / total_steps;
         float x = x0;
         float y = y0;
-        Color currentFlameColor = Color.yellow;
-        int orangeStart = (int) Math.ceil(0.3 * total_steps);
-        int redStart = (int) Math.ceil(0.7 * total_steps);
+        Color currentFlameColor = new Color(255,232,8);
+        int shade2= (int) Math.ceil(0.3 * total_steps);
+        int shade3 = (int) Math.ceil(0.5 * total_steps);
+        int shade4 = (int) Math.ceil(0.7 * total_steps);
+        int shade5 = (int) Math.ceil(0.9 * total_steps);
         for (int number_of_steps = 0; number_of_steps <= total_steps; number_of_steps++) {
-            if (number_of_steps >= orangeStart)
-                currentFlameColor = Color.orange;
-            if (number_of_steps >= redStart)
-                currentFlameColor = Color.red;
+            if (number_of_steps == shade2)
+                currentFlameColor = new Color(255,206,0);
+            if (number_of_steps == shade3)
+                currentFlameColor = new Color(255,154,0);
+            if (number_of_steps == shade4)
+                currentFlameColor = new Color(255,90,0);
+            if (number_of_steps == shade5)
+                currentFlameColor = new Color(255,0,0);
             plotPoint(g, origin, Math.round(x), Math.round(y), currentFlameColor);
             x += x_incr;
             y += y_incr;
@@ -134,7 +140,6 @@ public class Fire extends Applet implements ActionListener {
     
     public void paint(Graphics g) {
         
-
         int originX = (getX() + getWidth()) / 2;
         int originY = (getY() + getHeight()) / 2;
         gridGap = 4 + scale;
@@ -150,8 +155,6 @@ public class Fire extends Applet implements ActionListener {
 
         // create grid
         drawGrid(g, originX, originY, getWidth(), getHeight(), foregroundColor);
-
-        // plot line
 
         drawFlame(g, flameStart, new int[]{originX,originY}, flameWidth);
     }

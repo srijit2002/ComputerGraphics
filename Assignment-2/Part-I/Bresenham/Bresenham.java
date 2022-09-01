@@ -84,16 +84,13 @@ public class Bresenham extends Applet implements ActionListener {
         return button;
     }
 
-    public void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-    public void drawLineBresenham(Graphics g, int[] p1, int[] p2, int dx, int dy, int decide, int[] origin) {
+    public void drawLineBresenham(Graphics g, int[] p1, int[] p2, int[] origin) {
         int x1 = p1[0], y1 = p1[1];
         int x2 = p2[0], y2 = p2[1];
-        int pk = 2 * dy - dx;
+        int dy=y2-y1;
+        int dx=x2-x1;
+        boolean flag=Math.abs(dy)<Math.abs(dx);
+        int pk = flag ? (2 * dy - dx) : (2 * dx - dy);
         for (int i = 0; i <= dx; i++) {
             plotPoint(g, origin, x1, y1, Color.blue);
             if (x1 < x2) {
@@ -102,29 +99,18 @@ public class Bresenham extends Applet implements ActionListener {
                 x1--;
             }
             if (pk < 0) {
-                if (decide == 0) {
+                if (flag) {
                     pk = pk + 2 * dy;
                 } else
-                    pk = pk + 2 * dy;
+                    pk = pk + 2 * dx;
             } else {
                 if (y1 < y2)
                     y1++;
                 else
                     y1--;
-                pk = pk + 2 * dy - 2 * dx;
+                if(flag) pk = pk + 2 * dy - 2 * dx;
+                else pk = pk + 2 * dx - 2 * dy;
             }
-        }
-    }
-
-    public void drawLineBresenham(Graphics g, int[] p1, int[] p2, int[] origin) {
-        int dx = Math.abs(p2[0] - p1[0]);
-        int dy = Math.abs(p2[1] - p1[1]);
-        if (dx > dy) {
-            drawLineBresenham(g, p1, p2, dx, dy, 0, origin);
-        } else {
-            swap(p1, 0, 1);
-            swap(p2, 0, 1);
-            drawLineBresenham(g, p1, p2, dy, dx, 1, origin);
         }
     }
 
@@ -155,7 +141,7 @@ public class Bresenham extends Applet implements ActionListener {
             scale = Math.min(100, scale + 2);
             repaint();
         } else if (e.getSource() == zoomOutButton) {
-            scale =Math.max(-3, scale - 2);
+            scale = Math.max(-3, scale - 2);
             repaint();
         } else if (e.getSource() == drawLineButton) {
             String userinput = input.getText();
