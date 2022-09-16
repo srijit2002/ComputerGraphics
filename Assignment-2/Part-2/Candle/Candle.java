@@ -4,6 +4,7 @@ import java.awt.*;
 import java.applet.Applet;
 import java.awt.event.*;
 // import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 
@@ -139,9 +140,10 @@ public class Candle extends Applet implements ActionListener {
         int endY = start[1] + 4;
         int endX = start[0] - (flameWidth / 2) * 2;
         int sign = 1;
-
+        
         for (int i = 0; i < flameWidth; i++) {
-            drawLineDDA(g, start, new int[] { endX, endY }, origin);
+            int currentHeight=endY+ThreadLocalRandom.current().nextInt(0,4);
+            drawLineDDA(g, start, new int[] { endX, currentHeight }, origin);
             endX += 2;
             if (i == (flameWidth / 2)) {
                 sign *= -1;
@@ -170,8 +172,6 @@ public class Candle extends Applet implements ActionListener {
         this.isCandleOn=false;
     }
     public void paint(Graphics g) {
-        
-
         int originX = (getX() + getWidth()) / 2;
         int originY = (getY() + getHeight()) / 2;
         gridGap = 4 + scale;
