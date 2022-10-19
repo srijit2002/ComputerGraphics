@@ -2,7 +2,7 @@ package com.computer_graphics;
 import java.awt.*;
 
 public class EllipsePainter {
-        public static void paintEllipse(PointPlotter p, float rx, float ry, float xc, float yc) {
+        public static void paintEllipse(PointPlotter p, int rx, int ry, int xc, int yc) {
                 float dx, dy, d1, d2, x, y;
                 x = 0;
                 y = ry;

@@ -3,6 +3,7 @@ import java.applet.Applet;
 import java.awt.event.*;
 import com.computer_graphics.*;
 
+
 public class Q2 extends Applet implements ActionListener {
     Color zoomInButtonColor = Color.CYAN;
     Color zoomOutButtonColor = Color.ORANGE;
@@ -16,9 +17,9 @@ public class Q2 extends Applet implements ActionListener {
     int scale = 1;
     int gridGap;
     int pointDiameter = 16;
-    Button zoomInButton, zoomOutButton, drawLineButton, invertColorButton;
+    Button zoomInButton, zoomOutButton, drawLineButton;
     TextField input;
-
+    int rx=10,ry=10,xc=20,yc=20;
     public void init() {
         this.setBackground(backgroundColor);
         zoomInButton = createButton("Zoom In", zoomInButtonColor);
@@ -28,6 +29,13 @@ public class Q2 extends Applet implements ActionListener {
         zoomOutButton = createButton("Zoom Out", zoomOutButtonColor);
         add(zoomOutButton);
         zoomOutButton.addActionListener(this);
+
+        drawLineButton = createButton("Draw Ellipse", drawLineButtonColor);
+        add(drawLineButton);
+        drawLineButton.addActionListener(this);
+
+        input = new TextField("10 20 20 20");
+        add(input);
     }
 
     private Button createButton(String label, Color color) {
@@ -56,7 +64,9 @@ public class Q2 extends Applet implements ActionListener {
         new GridDrawer(g, originX, originY).drawGrid(gridGap, getWidth(), getHeight(), foregroundColor);
         PointPlotter p = new PointPlotter(g, gridGap, new int[] { originX, originY }, pointDiameter);
         p.setColor(Color.red);
-        EllipsePainter.paintEllipse(p,10,10,10,19);
+        // EllipsePainter.paintEllipse(p,rx,ry,xc,yc);
+        // LinePainter.paintLine(new int[]{-20,-20},new int[]{20,20},p);
+        TrianglePainter.paintTriangle(new int[]{0,0},new int[]{20,0},new int[]{20,20},p);
     }
 
     @Override
@@ -69,25 +79,11 @@ public class Q2 extends Applet implements ActionListener {
             repaint();
         } else if (e.getSource() == drawLineButton) {
             String userinput = input.getText();
-            if (userinput.length() == 0) {
-                input.setText("Please check your input format");
-                return;
-            }
             String[] points_str = userinput.split(" ");
-            if (points_str.length != 3) {
-                input.setText("Please check your input format");
-                return;
-            }
-            int[] endpoint_1 = new int[2];
-
-            try {
-                for (int i = 0; i < 2; i++) {
-                    endpoint_1[i] = Integer.valueOf(points_str[i]);
-                }
-            } catch (Exception exception) {
-                input.setText("Please check your input format");
-                return;
-            }
+            rx=Integer.parseInt(points_str[0]);
+            rx=Integer.parseInt(points_str[1]);
+            rx=Integer.parseInt(points_str[2]);
+            rx=Integer.parseInt(points_str[3]);
             repaint();
         }
     }
