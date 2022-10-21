@@ -14,7 +14,7 @@ public class LinePainter {
         float x = x0;
         float y = y0;
         for (int number_of_steps = 0; number_of_steps <= total_steps; number_of_steps++) {
-            p.plotPoint(Math.round(x), Math.round(y));
+            p.plotPoint(new int[]{Math.round(x), Math.round(y)});
             x += x_incr;
             y += y_incr;
         }

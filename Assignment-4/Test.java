@@ -14,6 +14,6 @@ public class Test extends Applet{
         int originX = (getX() + getWidth()) / 2;
         int originY = (getY() + getHeight()) / 2;
         PointPlotter p = new PointPlotter(g, 5, new int[] { originX, originY }, 16);
-        Body body=new Body(p,10,10,15,35,SpotType.SPOTTED,HairType.HAIRY);
+        Body body=new Body(p,10,10,15,35,SpotType.SPOTLESS,HairType.HAIRLESS);
     }
 }

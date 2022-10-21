@@ -2,7 +2,7 @@ package com.computer_graphics;
 import java.awt.*;
 
 public class EllipsePainter {
-        public static void paintEllipse(PointPlotter p, int rx, int ry, int xc, int yc) {
+        public static void paintEllipse(PointPlotter p, int rx, int ry, int xc, int yc,Rotator rotator) {
                 float dx, dy, d1, d2, x, y;
                 x = 0;
                 y = ry;
@@ -11,10 +11,10 @@ public class EllipsePainter {
                 dx = 2 * ry * ry * x;
                 dy = 2 * rx * rx * y;
                 while (dx < dy) {
-                        p.plotPoint((int) (x + xc), (int) (y + yc));
-                        p.plotPoint((int) (-x + xc), (int) (y + yc));
-                        p.plotPoint((int) (x + xc), (int) (-y + yc));
-                        p.plotPoint((int) (-x + xc), (int) (-y + yc));
+                        p.plotPoint(rotator.rotate((int) (x + xc), (int) (y + yc)));
+                        p.plotPoint(rotator.rotate((int) (-x + xc), (int) (y + yc)));
+                        p.plotPoint(rotator.rotate((int) (x + xc), (int) (-y + yc)));
+                        p.plotPoint(rotator.rotate((int) (-x + xc), (int) (-y + yc)));
                         if (d1 < 0) {
                                 x++;
                                 dx = dx + (2 * ry * ry);
@@ -32,10 +32,10 @@ public class EllipsePainter {
                                 - (rx * rx * ry * ry);
 
                 while (y >= 0) {
-                        p.plotPoint((int) (x + xc), (int) (y + yc));
-                        p.plotPoint((int) (-x + xc), (int) (y + yc));
-                        p.plotPoint((int) (x + xc), (int) (-y + yc));
-                        p.plotPoint((int) (-x + xc), (int) (-y + yc));
+                        p.plotPoint(rotator.rotate((int) (x + xc), (int) (y + yc)));
+                        p.plotPoint(rotator.rotate((int) (-x + xc), (int) (y + yc)));
+                        p.plotPoint(rotator.rotate((int) (x + xc), (int) (-y + yc)));
+                        p.plotPoint(rotator.rotate((int) (-x + xc), (int) (-y + yc)));
 
                         if (d2 > 0) {
                                 y--;

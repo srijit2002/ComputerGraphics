@@ -12,12 +12,16 @@ public class PointPlotter {
         this.origin=origin;
         this.pointDiameter=pointDiameter;
     }
-    public void plotPoint(int x, int y) {
+    public void plotPoint(int []point) {
+        int x=point[0];
+        int y=point[1];
         int radius = pointDiameter / 2;
         int centerX = origin[0] + x * gridGap - radius / 2;
         int centerY = origin[1] - y * gridGap - radius / 2;
-        
         g.fillOval(centerX, centerY, radius, radius);
+    }
+    public void plotPoint(int x,int y) {
+        plotPoint(new int[]{x, y});
     }
     public void setColor(Color c){
         g.setColor(c);

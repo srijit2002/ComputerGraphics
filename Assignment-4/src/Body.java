@@ -9,18 +9,18 @@ public class Body {
     int number_of_spots = 20;
     int number_of_hairs = 80;
 
-    public Body(PointPlotter p, int centerX, int centerY, int radiusX, int radiusY, SpotType st, HairType ht) {
+    public Body(PointPlotter p, int centerX, int centerY, int radiusX, int radiusY, SpotType st, HairType ht,Rotator rotator) {
         this.centerX = centerX;
         this.centerY = centerY;
         this.radiusX = radiusX;
         this.radiusY = radiusY;
-        EllipsePainter.paintEllipse(p, radiusX, radiusY, centerX, centerY);
+        EllipsePainter.paintEllipse(p, radiusX, radiusY, centerX, centerY,rotator);
         if (st == SpotType.SPOTTED)
             createSpot(p);
         if (ht == HairType.HAIRY)
             createHair(p);
     }
-
+    
     private void createSpot(PointPlotter p) {
         for (int i = 0; i < number_of_spots; i++) {
             int []point=getRandomPoint();
