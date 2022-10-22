@@ -7,7 +7,7 @@ import com.computer_graphics.*;
 public class Body {
     int centerX, centerY, radiusX, radiusY;
     int number_of_spots = 20;
-    int number_of_hairs = 80;
+    int number_of_hairs = 25;
 
     public Body(PointPlotter p, int centerX, int centerY, int radiusX, int radiusY, SpotType st, HairType ht,Rotator rotator) {
         this.centerX = centerX;
@@ -18,7 +18,7 @@ public class Body {
         if (st == SpotType.SPOTTED)
             createSpot(p);
         if (ht == HairType.HAIRY)
-            createHair(p);
+            createHair(p,rotator);
     }
     
     private void createSpot(PointPlotter p) {
@@ -28,14 +28,16 @@ public class Body {
         }
     }
 
-    private void createHair(PointPlotter p) {
+    private void createHair(PointPlotter p,Rotator rt) {
         int dirx = 1, dx = 2, dy = 3, diry = 1;
+        int []d={-1,1};
         for (int i = 0; i < number_of_hairs; i++) {
-            int []point=getRandomPoint();
+            int []without_rotation=getRandomPoint();
+            int []point=rt.rotate(without_rotation[0],without_rotation[1]);
             int rx=point[0],ry=point[1];
             LinePainter.paintLine(new int[] { rx, ry }, new int[] { rx + dirx * dx, ry + diry * dy }, p);
-            dirx *= -1;
-            diry *= -1;
+            dirx = d[ThreadLocalRandom.current().nextInt(0,2)];
+            diry = d[ThreadLocalRandom.current().nextInt(0,2)];
         }
     }
 

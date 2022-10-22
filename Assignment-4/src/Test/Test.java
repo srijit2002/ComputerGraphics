@@ -2,7 +2,8 @@ import java.awt.*;
 import java.applet.Applet;
 import java.awt.event.*;
 import com.computer_graphics.*;
-
+import animal.features.*;
+import animal.bodyParts.*;
 
 public class Test extends Applet implements ActionListener {
     Color zoomInButtonColor = Color.CYAN;
@@ -64,8 +65,8 @@ public class Test extends Applet implements ActionListener {
         new GridDrawer(g, originX, originY).drawGrid(gridGap, getWidth(), getHeight(), foregroundColor);
         PointPlotter p = new PointPlotter(g, gridGap, new int[] { originX, originY }, pointDiameter);
         p.setColor(Color.blue);
-         
-        
+        Rotator rt=new Rotator(0,0,90);
+        new MovableParts(p,50, 50, 10, 40, SpotType.SPOTLESS, HairType.HAIRLESS,new int[]{-90,30});
     }
 
     @Override
